@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post-Surgical Care</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Custom CSS for transitions */
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-800 text-center mb-10">Post-Surgical Care</h1>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- Card for Knee Replacement Surgery -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card1">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Knee Replacement Surgery</h2>
+          <p class="description text-gray-600 mb-4">Knee replacement surgery involves replacing a damaged or worn-out knee joint with an artificial implant.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(1)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Post-surgery, apply ice packs for 15-20 minutes every hour, elevate the leg, and perform gentle exercises as directed by your physical therapist.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card for Appendectomy -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card2">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Appendectomy</h2>
+          <p class="description text-gray-600 mb-4">An appendectomy is the removal of the appendix, often due to appendicitis.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(2)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Keep the surgical area clean and dry, avoid heavy lifting, and stick to a light diet while your body recovers.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card for Hip Replacement Surgery -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card3">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Hip Replacement Surgery</h2>
+          <p class="description text-gray-600 mb-4">Hip replacement surgery replaces a damaged hip joint with an artificial one.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(3)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Use a walker to move around, avoid bending beyond 90 degrees, and sleep with a pillow between your legs for comfort.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card for Cataract Surgery -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card4">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Cataract Surgery</h2>
+          <p class="description text-gray-600 mb-4">Cataract surgery removes the cloudy lens in your eye and replaces it with an artificial one.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(4)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Wear your protective eye shield, avoid rubbing your eyes, and use prescribed eye drops as directed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card for Hernia Repair -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card5">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Hernia Repair</h2>
+          <p class="description text-gray-600 mb-4">Hernia repair surgery fixes a hernia by closing the hole in the abdominal wall.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(5)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Avoid heavy lifting for at least six weeks, keep the incision site clean, and walk short distances to avoid blood clots.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card for Gallbladder Removal -->
+      <div class="card bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300 ease-in-out" id="card6">
+        <div class="card-content">
+          <h2 class="text-2xl font-semibold text-blue-600 mb-2">Gallbladder Removal</h2>
+          <p class="description text-gray-600 mb-4">Gallbladder removal, or cholecystectomy, is performed to remove a diseased gallbladder.</p>
+          <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 ease-in-out see-care-btn" onclick="toggleCare(6)">See Care</button>
+          <p class="care hidden text-green-600 mt-4">
+            Stick to a low-fat diet for a few weeks, avoid strenuous activity, and monitor for any digestive issues.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleCare(cardNumber) {
+      const card = document.getElementById(`card${cardNumber}`);
+      const description = card.querySelector('.description');
+      const care = card.querySelector('.care');
+      const button = card.querySelector('.see-care-btn');
+    
+      if (care.classList.contains('hidden')) {
+        care.classList.remove('hidden');
+        care.classList.add('fade-in');
+        description.classList.add('hidden');
+        button.textContent = "Hide Care";
+      } else {
+        care.classList.add('hidden');
+        description.classList.remove('hidden');
+        button.textContent = "See Care";
+      }
+    }
+  </script>
+
+</body>
+</html>
