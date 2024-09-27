@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <style>
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            text-align: center;
+            padding: 50px;
+            background-image: url(img/doctor-with-stethoscope-hands-hospital-background.jpg);
+            z-index: 0;
+        }
+
+        h1 {
+            font-size: 45px;
+            padding-bottom: 20px;
+            color: #2c3e50;
+            animation: fadeInDown 1s;
+        }
+
+        #predictionForm {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px; /* Gap between rows and columns */
+            background-color: rgb(28, 121, 242);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch; /* Ensure input elements stretch equally */
+            width: 100%;
+        }
+
+        label {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #bdc3c7;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        button {
+            grid-column: span 2; /* Button spans both columns */
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 150px;
+            margin-left: 330px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #27ae60;
+            animation: fadeInUp 1s;
+            grid-column: span 2;
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Breast Cancer Prediction</h1>
+    <form id="predictionForm" method="POST" action="/predict/">
+        <!-- {% csrf_token %} -->
+        <div>
+            <label for="mean_radius">Mean Radius:</label>
+            <input type="number" step="any" id="mean_radius" name="mean_radius" required>
+        </div>
+        <div>
+            <label for="mean_texture">Mean Texture:</label>
+            <input type="number" step="any" id="mean_texture" name="mean_texture" required>
+        </div>
+        <div>
+            <label for="mean_perimeter">Mean Perimeter:</label>
+            <input type="number" step="any" id="mean_perimeter" name="mean_perimeter" required>
+        </div>
+        <div>
+            <label for="mean_area">Mean Area:</label>
+            <input type="number" step="any" id="mean_area" name="mean_area" required>
+        </div>
+        <div>
+            <label for="mean_compactness">Mean Compactness:</label>
+            <input type="number" step="any" id="mean_compactness" name="mean_compactness" required>
+        </div>
+        <div>
+            <label for="mean_concavity">Mean Concavity:</label>
+            <input type="number" step="any" id="mean_concavity" name="mean_concavity" required>
+        </div>
+        <div>
+            <label for="worst_radius">Worst Radius:</label>
+            <input type="number" step="any" id="worst_radius" name="worst_radius" required>
+        </div>
+        <div>
+            <label for="worst_perimeter">Worst Perimeter:</label>
+            <input type="number" step="any" id="worst_perimeter" name="worst_perimeter" required>
+        </div>
+        <div>
+            <label for="worst_area">Worst Area:</label>
+            <input type="number" step="any" id="worst_area" name="worst_area" required>
+        </div>
+        <div>
+            <label for="worst_concavity">Worst Concavity:</label>
+            <input type="number" step="any" id="worst_concavity" name="worst_concavity" required>
+        </div>
+        <button type="submit">Predict</button>
+    </form>
+    <h2 id="result"></h2>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(document.getElementById('predictionForm'));
+
+            const data = new URLSearchParams();
+            for (const pair of formData) {
+                data.append(pair[0], pair[1]);
+            }
+
+            fetch('/predict/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: data
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
