@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #E0F7FA 0%, #FFCCBC 100%);
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #a116f1;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button{
+            height: 120px;
+            width: 250px;
+        }
+
+        .button:hover {
+            background-color: rgba(161, 22, 241,0.7);
+            transform: scale(1.05);
+        }
+
+        .button i {
+            margin-right: 8px;
+        }
+
+        /* Container for buttons */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        /* Banner or Hero Image */
+        .hero-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 40px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .button {
+                padding: 120px 240px;
+                font-size: 14px;
+            }
+
+            .button i {
+                margin-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Image -->
+    <img src="https://via.placeholder.com/1200x300?text=Welcome+to+Patient+Portal" alt="Patient Portal Banner" class="hero-image">
+
+    <h1>Welcome to the Patient Portal</h1>
+    
+    <div class="button-container">
+        <button class="button" onclick="window.location.href='{% url 'book_appointment' %}'">
+            <i class="fas fa-calendar-plus"></i>Book Appointment
+        </button>
+
+        <button class="button" onclick="window.location.href='{% url 'appointment_history' %}'">
+            <i class="fas fa-file-medical-alt"></i>View Medical Records
+        </button>
+
+        <button class="button" onclick="window.location.href='{% url 'scheduled_appointments' %}'">
+            <i class="fas fa-robot"></i>Chat with AI Assistant
+        </button>
+    </div>
+
+</body>
+</html>
