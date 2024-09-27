@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup/Login as</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Reset and box model */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f7f8fa;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Parallax background */
+        .parallax-bg {
+            background: linear-gradient(135deg, #4A90E2, #50C878);
+            height: 300px;
+            background-attachment: fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navbar styling */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background: #4A90E2;
+            color: white;
+        }
+
+        /* Responsive nav toggle */
+        .toggle-btn {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Mobile nav styling */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav a {
+            margin: 10px 0;
+            padding: 15px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        /* Flexbox layout for cards */
+        .role-cards {
+            display: flex;
+            justify-content: space-around;
+            width: 80%;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        /* Individual Role Card */
+        .card {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            width: 350px; /* Increased size */
+            margin: 20px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Card Image */
+        .card img {
+            width: 180px; /* Increased size */
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Card Title */
+        .card h2 {
+            margin-bottom: 15px;
+            font-size: 2rem; /* Increased font size */
+            color: #444;
+        }
+
+        /* Buttons */
+        .card button {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 30px;
+            width: 180px; /* Increased width */
+            font-size: 1rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card button:hover {
+            background: linear-gradient(to right, #2575fc, #6a11cb);
+            transform: scale(1.05);
+        }
+
+        /* Register button color variation */
+        .register-btn {
+            background: linear-gradient(to right, #28a745, #218838);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(to right, #218838, #28a745);
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .doctor-card {
+                margin-top: 50px;
+            }
+
+            .role-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Parallax Background -->
+    <div class="parallax-bg">
+        Signup/Login As
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">MySite</div>
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Services</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </div>
+    
+        <!-- Hamburger Menu (mobile) -->
+        <button class="toggle-btn" onclick="toggleMenu()">☰</button>
+    
+        <!-- Mobile Nav Links -->
+        <div class="mobile-nav" id="mobileNav">
+          <a href="#">Home</a>
+          <a href="#">Services</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+       
+
+        <div class="role-cards">
+            <!-- Doctor Card -->
+            <div class="card">
+                <img src="doctor-image.png" alt="Doctor">
+                <h2>Doctor</h2>
+                <a href="#"><button class="register-btn">Register</button></a>
+                <a href="#"><button>Login</button></a>
+            </div>
+
+            <!-- Patient Card -->
+            <div class="card">
+                <img src="patient-image.png" alt="Patient">
+                <h2>Patient</h2>
+                <a href="#"><button class="register-btn">Register</button></a>
+                <a href="#"><button>Login</button></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle menu for mobile
+        function toggleMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileNav.style.display === 'flex') {
+                mobileNav.style.display = 'none';
+            } else {
+                mobileNav.style.display = 'flex';
+            }
+        }
+    </script>
+
+</body>
+</html>
