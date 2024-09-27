@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor - Scheduled Appointments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            display: flex;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            background-color: #007BFF;
+            color: white;
+            width: 220px; /* Reduced width */
+            height: 100vh;
+            position: fixed;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensure no content overflows */
+        }
+
+        .sidebar h2 {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            width: 100%;
+            padding: 12px 20px; /* Adjusted padding */
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem; /* Smaller font size */
+            text-align: left;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+            overflow: hidden; /* Ensure no content overflows */
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 220px; /* Adjusted margin to match sidebar width */
+            padding: 40px;
+            flex: 1;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007BFF;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .header .filter-btn {
+            background-color: #ffc107;
+            color: #007BFF;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .header .filter-btn:hover {
+            background-color: #ffb400;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin: 30px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-group label {
+            margin-right: 10px;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .filter-group input, .filter-group select {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+            margin-right: 15px;
+        }
+
+        .filter-group button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .filter-group button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Search Box */
+        .search-box {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Appointments Table */
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointments-table th, .appointments-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .appointments-table th {
+            background-color: #f0f4f8;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .appointments-table td a {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .appointments-table td a:hover {
+            background-color: #005bb5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+                justify-content: space-between;
+                padding: 10px;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .appointments-table {
+                width: 100%;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>MedConnect</h2>
+        <a href="#" class="active"><i class="fas fa-calendar-alt"></i> View Appointments</a>
+        <a href="#"><i class="fas fa-user-md"></i> My Profile</a>
+        <a href="#"><i class="fas fa-users"></i> Manage Patients</a>
+        <a href="#"><i class="fas fa-history"></i> History</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Scheduled Appointments</h1>
+            <button type="button" class="filter-btn" onclick="window.location.href='?filter=today'">Today's Appointments</button>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-group">
+                <label for="filter_date">Filter by Date:</label>
+                <input type="date" id="filter_date" name="filter_date">
+                <button type="button" class="filter-btn">Filter</button>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search by patient name, date, or symptoms...">
+                <button type="button">Search</button>
+            </div>
+        </div>
+
+        <!-- Appointments Table -->
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Patient</th>
+                    <th>Symptoms</th>
+                    <th>Mode</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if appointments %}
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                    <td>{{ appointment.symptoms }}</td>
+                    <td>{{ appointment.appointment_type }}</td>
+                    <td><a href="{% url 'appointment_detail' appointment.id %}">View</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="4">No scheduled appointments found for the selected date.</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
