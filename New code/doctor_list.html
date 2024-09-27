@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Multi-color Gradient Background */
+        body {
+            background: linear-gradient(135deg, #6DD5FA 0%, #FFB88C 40%, #FF6F91 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Box shadow, transitions, and hover effects */
+        .doctor-card {
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 50%, rgba(255,248,240,0.9) 100%);
+        }
+
+        .doctor-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button hover effect */
+        .btn-hover:hover {
+            background-color: #2563EB; /* Darker blue */
+            transform: scale(1.08);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Form Input Focus Effects */
+        input:focus, select:focus {
+            border-color: #2563EB;
+            outline: none;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+            transition: box-shadow 0.3s ease;
+        }
+
+        /* Search Form Styling */
+        .form-container input, .form-container select, .form-container button {
+            transition: all 0.3s ease;
+        }
+
+        .form-container input:hover, .form-container select:hover {
+            border-color: #3B82F6;
+            transform: scale(1.02);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .form-container {
+                flex-direction: column;
+            }
+
+            .form-container input, .form-container select, .form-container button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Search and Filter Section -->
+    <div class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold text-center text-white mb-10">Find a Doctor</h1>
+
+        <!-- Search and Filter Form -->
+        <form method="GET" class="form-container flex flex-wrap justify-between mb-8 bg-white bg-opacity-50 p-6 rounded-lg shadow-lg">
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ search_query }}" 
+                placeholder="Search by name" 
+                class="p-3 border rounded-lg w-full md:w-2/3 focus:ring-2 focus:ring-blue-400"
+            />
+            
+            <select name="specialization" class="p-3 border rounded-lg ml-4 w-full md:w-1/4 focus:ring-2 focus:ring-blue-400">
+                <option value="">All Specializations</option>
+                <option value="Cardiologist" {% if specialization_filter == "Cardiologist" %}selected{% endif %}>Cardiologist</option>
+                <option value="Dermatologist" {% if specialization_filter == "Dermatologist" %}selected{% endif %}>Dermatologist</option>
+                <option value="Neurologist" {% if specialization_filter == "Neurologist" %}selected{% endif %}>Neurologist</option>
+                <!-- Add more specializations here -->
+            </select>
+
+            <button type="submit" class="bg-blue-600 text-white p-3 rounded-lg ml-4 w-full md:w-1/5 btn-hover shadow-lg">
+                Search
+            </button>
+        </form>
+
+        <!-- Doctor List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for doctor in doctors %}
+            <div class="bg-white p-6 rounded-lg shadow-lg doctor-card">
+                <img src="{{ doctor.profile_picture.url }}" alt="Profile Image" class="w-32 h-32 object-cover rounded-full mx-auto mb-4 shadow-md">
+                <h2 class="text-xl font-semibold text-center text-gray-800">{{ doctor.name }}</h2>
+                <p class="text-center text-gray-600">{{ doctor.specialization }}</p>
+                <p class="text-center text-gray-500">{{ doctor.years_of_experience }} years of experience</p>
+
+                <div class="flex justify-center mt-4">
+                    <a href="{% url 'doctor_detail' doctor.id %}" class="bg-blue-600 text-white p-2 rounded-lg btn-hover shadow-lg">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- If no doctors found -->
+        {% if not doctors %}
+        <p class="text-center text-gray-200 mt-12">No doctors found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
