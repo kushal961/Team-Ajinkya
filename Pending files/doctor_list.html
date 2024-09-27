@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Search and Filter Section -->
+    <div class="container mx-auto p-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Find a Doctor</h1>
+
+        <!-- Search and Filter Form -->
+        <form method="GET" class="flex justify-between mb-6">
+            <input 
+                type="text" 
+                name="search" 
+                value="{{ search_query }}" 
+                placeholder="Search by name" 
+                class="p-3 border rounded-lg w-full md:w-2/3"
+            />
+            
+            <select name="specialization" class="p-3 border rounded-lg ml-4">
+                <option value="">All Specializations</option>
+                <option value="Cardiologist" {% if specialization_filter == "Cardiologist" %}selected{% endif %}>Cardiologist</option>
+                <option value="Dermatologist" {% if specialization_filter == "Dermatologist" %}selected{% endif %}>Dermatologist</option>
+                <option value="Neurologist" {% if specialization_filter == "Neurologist" %}selected{% endif %}>Neurologist</option>
+                <!-- Add more specializations here -->
+            </select>
+
+            <button type="submit" class="bg-blue-500 text-white p-3 rounded-lg ml-4">Search</button>
+        </form>
+
+        <!-- Doctor List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for doctor in doctors %}
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <img src="{{ doctor.profile_picture.url }}" alt="Profile Image" class="w-32 h-32 object-cover rounded-full mx-auto mb-4">
+                <h2 class="text-xl font-semibold text-center">{{ doctor.name }}</h2>
+                <p class="text-center text-gray-600">{{ doctor.specialization }}</p>
+                <p class="text-center text-gray-500">{{ doctor.years_of_experience }} years of experience</p>
+
+                <div class="flex justify-center mt-4">
+                    <a href="{% url 'doctor_detail' doctor.id %}" class="bg-blue-500 text-white p-2 rounded-lg">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- If no doctors found -->
+        {% if not doctors %}
+        <p class="text-center text-gray-500 mt-8">No doctors found.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
