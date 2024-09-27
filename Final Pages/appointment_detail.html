@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Details</title>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styling */
+        .header {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(145deg, #007BFF, #00C6FF);
+            padding: 50px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin: 10px 0 0;
+        }
+
+        .header:before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            left: -80px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: floating 6s infinite ease-in-out;
+        }
+
+        .header:after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: floating 8s infinite ease-in-out;
+        }
+
+        /* Body Background Animation */
+        body:before {
+            content: "";
+            position: absolute;
+            top: 100px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: center no-repeat;
+            background-size: cover;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        @keyframes floating {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Container Styling */
+        .container {
+            max-width: 1100px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            top: -50px; /* To align under the header */
+        }
+
+        /* Floating Card Effect */
+        .floating-card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .floating-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(83, 157, 243, 0.991);
+        }
+
+        /* Card Content */
+        .card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #007BFF;
+        }
+
+        .card-info {
+            flex: 1;
+            margin-left: 20px;
+        }
+
+        .card-info h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .card-info p {
+            font-size: 1rem;
+            color: #666;
+            margin: 10px 0 0;
+        }
+
+        .card-status {
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        /* Status Colors */
+        .status-completed {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .status-pending {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .status-canceled {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Full-Width Card */
+        .full-width-card {
+            grid-column: 1 / span 2;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            padding: 15px 25px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-card {
+                width: 100%;
+                margin: 20px 0;
+            }
+
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>Appointment Details</h1>
+        <p>Your essential appointment information</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Card Grid for Two-Column Layout -->
+        <div class="card-grid">
+            <div class="floating-card">
+                <div class="card-icon">👨‍⚕️</div>
+                <div class="card-info">
+                    <h3>Doctor</h3>
+                    <p>{{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</p>
+                </div>
+                <div class="card-status status-completed">{{ appointment.appointment_status }}</div>
+            </div>
+
+            <div class="floating-card">
+                <div class="card-icon">📅</div>
+                <div class="card-info">
+                    <h3>Date & Time</h3>
+                    <p>{{ appointment.appointment_date }}</p>
+                </div>
+            </div>
+
+            <!-- Symptoms -->
+            <div class="floating-card">
+                <div class="card-icon">💊</div>
+                <div class="card-info">
+                    <h3>Symptoms</h3>
+                    <p>{{ appointment.symptoms }}</p>
+                </div>
+            </div>
+
+            <!-- Disease -->
+            <div class="floating-card">
+                <div class="card-icon">⚕️</div>
+                <div class="card-info">
+                    <h3>Disease</h3>
+                    <p>{{ appointment.disease }}</p>
+                </div>
+            </div>
+
+            <!-- Details (Full-Width Card) -->
+            <div class="floating-card full-width-card">
+                <div class="card-icon">📋</div>
+                <div class="card-info">
+                    <h3>Details</h3>
+                    <p>{{ appointment.details }}</p>
+                </div>
+            </div>
+
+            <!-- Doctor's Notes -->
+            <div class="floating-card">
+                <div class="card-icon">📝</div>
+                <div class="card-info">
+                    <h3>Doctor's Notes</h3>
+                    <p>{{ appointment.doctors_notes }}</p>
+                </div>
+            </div>
+
+            <div class="floating-card">
+                <div class="card-icon">📝</div>
+                <div class="card-info">
+                    <h3>Prescription</h3>
+                    <p>{{ appointment.prescription }}</p>
+                </div>
+            </div>
+
+            {% if appointment.follow_up_date %}
+            <div class="floating-card">
+                <div class="card-icon">📝</div>
+                <div class="card-info">
+                    <h3>Follow-Up Date:</h3>
+                    <p>{{ appointment.follow_up_date }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if appointment.appointment_status == "Cancelled" %}
+            <div class="floating-card">
+                <div class="card-icon">📝</div>
+                <div class="card-info">
+                    <h3>Cancellation Reason </h3>
+                    <p>{{ appointment.cancellation_reason }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Back Button -->
+        <a href="{% url 'appointment_history' %}" class="back-btn">Go Back</a>
+    </div>
+</body>
+</html>

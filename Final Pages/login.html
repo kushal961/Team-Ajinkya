@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Custom Shadow and Animation */
+    .custom-shadow {
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.30);
+    }
+    /* Keyframes for input, button, and image animations */
+    @keyframes slideIn {
+      0% {
+        transform: translateY(100px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @keyframes scaleIn {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    /* Animations applied */
+    .animate-slide {
+      animation: slideIn 0.8s ease-in-out forwards;
+    }
+    .animate-fade {
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+    .animate-scale {
+      animation: scaleIn 1.2s ease-in-out forwards;
+    }
+    /* Button Hover Animation */
+    .btn-hover:hover {
+      transform: scale(1.05);
+    }
+    /* Image container for perfect fit and aspect ratio */
+    .image-container {
+      position: relative;
+      width: 90%;
+      height: 90%;
+      overflow: hidden;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-r from-blue-200 via-white-500 to-green-200 flex justify-center items-center py-10">
+
+  <div class="bg-white p-10 rounded-2xl custom-shadow w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 animate-fade">
+
+    <!-- Left Side: Form -->
+    <div class="p-8 animate-slide">
+      <h2 class="text-4xl font-extrabold text-center text-blue-600 mb-6">Login</h2>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="space-y-6" method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <!-- Error Messages -->
+        <div class="space-y-4">
+          <div>
+            <label class="text-lg font-semibold">Email Address</label>
+            <input type="email" id="email" name="email" class="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" placeholder="Enter your email" required />
+          </div>
+          <div>
+            <label class="text-lg font-semibold">Password</label>
+            <input type="password" id="password" name="password" class="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" placeholder="Enter your password" required />
+          </div>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 btn-hover">
+          Login
+        </button>
+      </form>
+
+      <!-- Or Divider -->
+      <div class="text-center text-gray-500 my-4">OR</div>
+
+      <!-- Third-Party Login Options -->
+      <div class="space-y-4">
+        <button class="w-full bg-red-500 text-white font-semibold py-3 rounded-lg hover:bg-red-600 transition-all duration-300 flex items-center justify-center btn-hover">
+          <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="Google" class="mr-2"/> Login with Google
+        </button>
+        <button class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center btn-hover">
+          <img src="https://img.icons8.com/color/24/000000/facebook-new.png" alt="Facebook" class="mr-2"/> Login with Facebook
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Side: Image -->
+    <div class="image-container animate-scale">
+      <img src="doct2.avif" alt="Login Illustration" />
+    </div>
+
+  </div>
+
+  {% if error_message %}
+    <p style="color:red;">{{ error_message }}</p>
+  {% endif %}
+
+</body>
+</html>
