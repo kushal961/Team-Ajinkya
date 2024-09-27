@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ doctor.name }} - Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Reset and box model */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f7f8fa;
+            color: #333;
+            scroll-behavior: smooth;
+        }
+
+        /* Parallax background */
+        .parallax-bg {
+            background: linear-gradient(135deg, #4A90E2, #50C878);
+            height: 300px;
+            background-attachment: fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navbar styling */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background: #4A90E2;
+            color: white;
+        }
+
+        /* Responsive nav toggle */
+        .toggle-btn {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Mobile nav styling */
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav a {
+            margin: 10px 0;
+            padding: 15px;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        /* Doctor card styling */
+        .doctor-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: -120px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            transition: transform 0.4s ease, box-shadow 0.3s ease;
+        }
+
+        .doctor-card:hover {
+            transform: translateY(0);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Profile picture styling */
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid #50C878;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-picture:hover {
+            transform: scale(1.1);
+        }
+
+        /* Button styling */
+        .btn-primary {
+            background: linear-gradient(45deg, #4A90E2, #50C878);
+            color: white;
+            padding: 0.8rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #50C878, #4A90E2);
+        }
+
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .toggle-btn {
+                display: block;
+            }
+
+            .mobile-nav {
+                display: flex;
+            }
+
+            .doctor-card {
+                margin-top: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Parallax Banner -->
+    <div class="parallax-bg">
+        {{ doctor.name }}
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">MySite</div>
+        <div class="nav-links">
+          <a href="#">Home</a>
+          <a href="#">Services</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </div>
+    
+        <!-- Hamburger Menu (mobile) -->
+        <button class="toggle-btn" onclick="toggleMenu()">☰</button>
+    
+        <!-- Mobile Nav Links -->
+        <div class="mobile-nav" id="mobileNav">
+          <a href="#">Home</a>
+          <a href="#">Services</a>
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Doctor Details Card -->
+    <div class="container mx-auto p-8">
+        <div class="doctor-card max-w-xl mx-auto text-center">
+            <img src="{{ doctor.profile_picture.url }}" alt="Profile Image" class="profile-picture mx-auto mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">{{ doctor.specialization }}</h2>
+            <p class="text-gray-600 mt-2">{{ doctor.years_of_experience }} years of experience</p>
+            <p class="text-gray-600 mt-2">Consultation Fees: ${{ doctor.consultation_fees }}</p>
+            <p class="text-gray-600 mt-2">Languages Spoken: {{ doctor.languages_spoken }}</p>
+
+            <div class="mt-8">
+                <a href="{% url 'book_appointment' doctor.id %}">
+                    <button class="btn-primary">Book Appointment</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            if (mobileNav.style.display === 'flex') {
+                mobileNav.style.display = 'none';
+            } else {
+                mobileNav.style.display = 'flex';
+            }
+        }
+    </script>
+
+</body>
+</html>
