@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stylish Responsive Sidebar</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      background: linear-gradient(45deg, #4CAF50, #2196F3);
+      padding-top: 20px;
+      position: fixed;
+      left: -250px;
+      transition: left 0.4s ease;
+      z-index: 1;
+    }
+
+    .sidebar.active {
+      left: 0;
+    }
+
+    /* Sidebar links */
+    .sidebar a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: white;
+      color: #333;
+      border-radius: 5px;
+    }
+
+    /* Toggle button styling */
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #333;
+      color: white;
+    }
+
+    /* Main content styling */
+    .main-content {
+      flex-grow: 1;
+      padding: 30px;
+      transition: margin-left 0.4s ease;
+      margin-left: 20px;
+    }
+
+    .main-content.active {
+      margin-left: 270px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+        left: -200px;
+      }
+
+      .main-content.active {
+        margin-left: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+
+  <!-- Toggle button -->
+  <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+  <!-- Main content -->
+  <div class="main-content" id="mainContent">
+    <h1>Responsive Sidebar</h1>
+    <p>Welcome to the sidebar example with a responsive design!</p>
+    <p>Click the hamburger menu to open and close the sidebar. This layout is responsive, adjusting to different screen sizes.</p>
+  </div>
+
+  <!-- JavaScript to handle sidebar toggle -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+      sidebar.classList.toggle('active');
+      mainContent.classList.toggle('active');
+    }
+  </script>
+
+</body>
+</html>
+
+
