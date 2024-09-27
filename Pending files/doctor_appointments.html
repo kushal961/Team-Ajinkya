@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor - View Scheduled Appointments</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .header { background-color: #4CAF50; color: white; padding: 10px 0; text-align: center; }
+        .filter-section { margin: 20px 0; }
+        .filter-section label { margin-right: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .filter-btn { background-color: #4CAF50; color: white; padding: 5px 10px; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Doctor - Scheduled Appointments</h1>
+        </div>
+
+        <div class="filter-section">
+            <form method="GET" action="">
+                <label for="filter_date">Filter by Date:</label>
+                <input type="date" id="filter_date" name="filter_date">
+                <button type="submit" class="filter-btn">Filter</button>
+
+                <button type="button" class="filter-btn" onclick="window.location.href='?filter=today'">Today's Appointments</button>
+                <button type="button" class="filter-btn" onclick="window.location.href='?filter=tomorrow'">Tomorrow's Appointments</button>
+            </form>
+        </div>
+
+        {% if appointments %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Patient</th>
+                    <th>Symptoms</th>
+                    <th>Mode</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appointment in appointments %}
+                <tr>
+                    <td>{{ appointment.appointment_date }}</td>
+                    <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                    <td>{{ appointment.symptoms }}</td>
+                    <td>{{ appointment.appointment_type }}</td>
+                    <td><a href="{% url 'd_appointment_detail' appointment.id %}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No scheduled appointments found for the selected date.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

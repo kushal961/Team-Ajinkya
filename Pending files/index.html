@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Role</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-around;
+            width: 60%;
+        }
+
+        .box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 30px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .box h2 {
+            margin-bottom: 20px;
+        }
+
+        .box button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .box button:hover {
+            background-color: #0056b3;
+        }
+
+        .box .register-btn {
+            background-color: #28a745;
+        }
+
+        .box .register-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Patient Box -->
+        <div class="box">
+            <h2>Patient</h2>
+            <a href="{% url 'patient_reg' %}">
+                <button class="register-btn">Register</button>
+            </a>
+            <a href="{% url 'login' %}">
+                <button>Login</button>
+            </a>
+        </div>
+
+        <!-- Doctor Box -->
+        <div class="box">
+            <h2>Doctor</h2>
+            <a href="{% url 'doctor_reg' %}">
+                <button class="register-btn">Register</button>
+            </a>
+            <a href="{% url 'login' %}">
+                <button>Login</button>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

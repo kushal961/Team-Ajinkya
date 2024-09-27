@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .profile-header h2 {
+            margin: 0;
+        }
+        .profile-header p {
+            font-size: 14px;
+            color: #666;
+        }
+        .profile-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .profile-details .detail-box {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+        .detail-box label {
+            font-weight: bold;
+            color: #333;
+        }
+        .detail-box p {
+            color: #666;
+            margin: 5px 0;
+        }
+        .profile-edit-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .profile-edit-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <img src="{{ doctor.profile_picture.url }}" alt="Doctor Profile Picture">
+            <div>
+                <h2>Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h2>
+                <p>{{ doctor.specialization }}</p>
+                <p><strong>Consultation Fee:</strong> ₹{{ doctor.consultation_fees }}</p>
+            </div>
+        </div>
+
+        <h3>Profile Details</h3>
+        <div class="profile-details">
+            <div class="detail-box">
+                <label>Phone Number:</label>
+                <p>{{ doctor.phone_number }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Medical License Number:</label>
+                <p>{{ doctor.medical_license_number }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Years of Experience:</label>
+                <p>{{ doctor.years_of_experience }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Working Hours:</label>
+                <p>{{ doctor.working_hours }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Clinic Address:</label>
+                <p>{{ doctor.clinic_address }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Languages Spoken:</label>
+                <p>{{ doctor.languages_spoken }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Online Consultation:</label>
+                <p>{{ doctor.consultation_type }}</p>
+            </div>
+            <div class="detail-box">
+                <label>Emergency Availability:</label>
+                <p>{{ doctor.is_available_for_emergency|yesno:"Available,Not Available" }}</p>
+            </div>
+        </div>
+
+        <a href="{% url 'edit_doctor_profile' %}" class="profile-edit-btn">Edit Profile</a>
+    </div>
+</body>
+</html>

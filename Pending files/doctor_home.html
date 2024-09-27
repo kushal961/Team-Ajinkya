@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #007BFF;
+            height: 100vh;
+            padding: 20px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1.1rem;
+            margin: 5px 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+
+        .sidebar a.active {
+            background-color: #0056b3;
+        }
+
+        .sidebar a .icon {
+            margin-right: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card h3 {
+            font-size: 1.6rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .dashboard-card p {
+            font-size: 1rem;
+            color: #777;
+            margin: 0;
+        }
+
+        .dashboard-card .icon {
+            font-size: 2.5rem;
+            color: #007BFF;
+            margin-bottom: 10px;
+        }
+
+        /* Appointment Section */
+        .appointments {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointments h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .appointment-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .appointment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .appointment-card .details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .appointment-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #007BFF;
+        }
+
+        .appointment-card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .view-btn {
+            padding: 10px 18px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .sidebar {
+                width: 200px;
+                padding: 10px;
+            }
+
+            .sidebar h2 {
+                font-size: 1.5rem;
+            }
+
+            .sidebar a {
+                font-size: 1rem;
+                padding: 10px;
+            }
+
+            .dashboard-card h3 {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 10px 0;
+            }
+
+            .sidebar a {
+                padding: 10px 20px;
+                white-space: nowrap;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .appointments {
+                padding: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>MedConnect</h2>
+        <a href="{% url 'doctor_appointments' %}" class="active"><span class="icon">📅</span> View Appointments</a>
+        <a href="{% url 'doctor_profile' %}"><span class="icon">👤</span> My Profile</a>
+        <a href="#"><span class="icon">👥</span> Manage Patients</a>
+        <a href="{% url 'appointment_history' %}"><span class="icon">📜</span> History</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h1>Welcome, Dr. {{ doctor.user.first_name }} {{ doctor.user.last_name }}</h1>
+            <p>Manage your upcoming appointments and patient information efficiently</p>
+        </div>
+
+        <!-- Dashboard Cards Section -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <div class="icon">📅</div>
+                <h3>Upcoming Appointments</h3>
+                <p>{{ upcoming_appointments_count }} appointments</p>
+            </div>
+            <div class="dashboard-card">
+                <div class="icon">👥</div>
+                <h3>Total Patients</h3>
+                <p>{{ total_patients_count }} patients</p>
+            </div>
+            <div class="dashboard-card">
+                <div class="icon">📜</div>
+                <h3>Appointment History</h3>
+                <p>{{ appointment_history_count }} records</p>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <div class="appointments">
+            <h2>Your Next Appointments</h2>
+            {% if appointments %}
+            {% for appointment in appointments %}
+            <div class="appointment-card">
+                <div class="details">
+                    <h3>{{ appointment.appointment_date }}</h3>
+                    <p>👤 {{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</p>
+                    <p>🩺 Symptoms: {{ appointment.symptoms }}</p>
+                </div>
+                <a href="{% url 'appointment_detail' appointment.id %}" class="view-btn">View Details</a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No upcoming appointments.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

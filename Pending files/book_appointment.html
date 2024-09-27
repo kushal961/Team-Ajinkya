@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h2>Book Appointment</h2>
+
+    <form id="appointment_form" method="POST" action="{% url 'book_appointment' %}">
+        {% csrf_token %}
+
+        <!-- Appointment Date and Time -->
+        <label for="appointment_date" class="block font-semibold mb-2">Appointment Date and Time:</label>
+        <input type="datetime-local" id="appointment_date" name="appointment_date" class="w-full p-2 border rounded" required>
+        <p id="date_error" class="error"></p>
+
+        <!-- Symptoms -->
+        <label for="symptoms">Symptoms:</label>
+        <input type="text" id="symptoms" name="symptoms" required>
+
+        <!-- Details -->
+        <label for="details">Details:</label>
+        <textarea id="details" name="details" required></textarea>
+
+        <!-- Appointment Type -->
+        <label for="appointment_type">Appointment Type:</label>
+        <select id="appointment_type" name="appointment_type" required>
+            <option value="in_person">In-Person</option>
+            <option value="virtual">Virtual</option>
+        </select>
+
+        <!-- Priority Type -->
+        <label for="priority">Priority Type:</label>
+        <select id="priority" name="priority" required>
+            <option value="regular">Regular</option>
+            <option value="emergency">Emergency</option>
+        </select>
+
+        <!-- Doctor Selection -->
+        <label for="doctor">Select Doctor:</label>
+        <select id="doctor" name="doctor" required>
+            {% for doctor in doctors %}
+                <option value="{{ doctor.id }}">{{ doctor.user.first_name }} - {{ doctor.specialization }}</option>
+            {% endfor %}
+        </select>
+        <p id="doctor_error" class="error"></p>
+
+        <!-- Submit Button -->
+        <button type="submit">Book Appointment</button>
+    </form>
+
+    <script>
+        document.getElementById('appointment_form').onsubmit = function(event) {
+            const appointmentDate = document.getElementById('appointment_date').value;
+            const doctor = document.getElementById('doctor').value;
+
+            // Clear previous error messages
+            document.getElementById('date_error').textContent = '';
+            document.getElementById('doctor_error').textContent = '';
+
+            if (!appointmentDate) {
+                document.getElementById('date_error').textContent = "Please select a valid date and time.";
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            if (!doctor) {
+                document.getElementById('doctor_error').textContent = "Please select a doctor.";
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+        };
+    </script>
+</body>
+</html>

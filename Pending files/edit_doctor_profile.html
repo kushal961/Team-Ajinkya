@@ -1,0 +1,251 @@
+<!-- edit_doctor_profile.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Doctor Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input[type="url"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        input[type="url"]:focus,
+        textarea:focus,
+        select:focus {
+            border: 1px solid #4CAF50;
+            outline: none;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox {
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .section-title {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Doctor Profile</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="section-title">Personal Information</div>
+
+            <div class="form-group">
+                <label for="first_name">First Name</label>
+                <input type="text" id="first_name" name="first_name" value="{{ doctor.user.first_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <input type="text" id="last_name" name="last_name" value="{{ doctor.user.last_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" id="phone_number" name="phone_number" value="{{ doctor.phone_number }}">
+            </div>
+
+            <div class="form-group">
+                <label for="date_of_birth">Date of Birth</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ doctor.date_of_birth|date:'Y-m-d' }}">
+
+            </div>
+
+            <div class="section-title">Professional Information</div>
+
+            <div class="form-group">
+                <label for="specialization">Specialization</label>
+                <input type="text" id="specialization" name="specialization" value="{{ doctor.specialization }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="medical_license_number">Medical License Number</label>
+                <input type="text" id="medical_license_number" name="medical_license_number" value="{{ doctor.medical_license_number }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="years_of_experience">Years of Experience</label>
+                <input type="number" id="years_of_experience" name="years_of_experience" value="{{ doctor.years_of_experience }}" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="consultation_fees">Consultation Fees</label>
+                <input type="number" id="consultation_fees" name="consultation_fees" value="{{ doctor.consultation_fees }}" step="0.01" min="0">
+            </div>
+
+            <div class="form-group">
+                <label for="working_hours">Working Hours</label>
+                <input type="text" id="working_hours" name="working_hours" value="{{ doctor.working_hours }}">
+            </div>
+
+            <div class="form-group">
+                <label for="days_available">Days Available</label>
+                <input type="text" id="days_available" name="days_available" value="{{ doctor.days_available }}">
+            </div>
+
+            <div class="form-group">
+                <label for="clinic_address">Clinic Address</label>
+                <textarea id="clinic_address" name="clinic_address">{{ doctor.clinic_address }}</textarea>
+            </div>
+
+            <div class="section-title">Additional Information</div>
+
+            <div class="form-group">
+                <label for="education">Education</label>
+                <textarea id="education" name="education">{{ doctor.education }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Biography</label>
+                <textarea id="bio" name="bio">{{ doctor.bio }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="emergency_contact_name">Emergency Contact Name</label>
+                <input type="text" id="emergency_contact_name" name="emergency_contact_name" value="{{ doctor.emergency_contact_name }}">
+            </div>
+
+            <div class="form-group">
+                <label for="emergency_contact_phone">Emergency Contact Phone</label>
+                <input type="text" id="emergency_contact_phone" name="emergency_contact_phone" value="{{ doctor.emergency_contact_phone }}">
+            </div>
+
+            <div class="form-group">
+                <label class="text-lg font-semibold">Consultation Mode</label>
+            <select id="consultation_mode" name="consultation_mode" class="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" required>
+                <option value="Online">Online</option>
+                <option value="Offline">Offline</option>
+                <option value="Both">Both</option>
+            </select>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment_slot_duration">Appointment Slot Duration (in minutes)</label>
+                <input type="number" id="appointment_slot_duration" name="appointment_slot_duration" value="{{ doctor.appointment_slot_duration }}" min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="languages_spoken">Languages Spoken</label>
+                <input type="text" id="languages_spoken" name="languages_spoken" value="{{ doctor.languages_spoken }}">
+            </div>
+
+            <div class="form-group">
+                <label for="clinic_name">Clinic Name</label>
+                <input type="text" id="clinic_name" name="clinic_name" value="{{ doctor.clinic_name }}">
+            </div>
+
+            <div class="form-group checkbox">
+                <label>
+                    <input type="checkbox" name="is_available_for_emergency" {% if doctor.is_available_for_emergency %}checked{% endif %}> Available for Emergency
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="max_daily_appointments">Max Daily Appointments</label>
+                <input type="number" id="max_daily_appointments" name="max_daily_appointments" value="{{ doctor.max_daily_appointments }}" min="1">
+            </div>
+
+            
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <div class="footer">
+            <p>Return to <a href="{% url 'doctor_profile' %}">Profile</a></p>
+        </div>
+    </div>
+</body>
+</html>

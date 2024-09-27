@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment History</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .view-details-btn { background-color: #28a745; color: white; padding: 5px 10px; border: none; cursor: pointer; }
+        #appointment-details-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
+        #modal-content { background-color: white; margin: 10% auto; padding: 20px; width: 50%; border-radius: 5px; }
+        .close-btn { background-color: #dc3545; color: white; padding: 5px 10px; border: none; cursor: pointer; float: right; }
+    </style>
+</head>
+<body>
+    <h2>Your Appointment History</h2>
+
+    {% if appointments %}
+    <table>
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                {% if role == 'patient' %}
+                    <th>Doctor</th>
+                {% elif role == 'doctor' %}
+                    <th>Patient</th>
+                {% endif %}
+                <th>Symptoms</th>
+                <th>Mode</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.appointment_date }}</td>
+                {% if role == 'patient' %}
+                    <td>{{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</td>
+                {% elif role == 'doctor' %}
+                    <td>{{ appointment.patient.user.first_name }} {{ appointment.patient.user.last_name }}</td>
+                {% endif %}
+                <td>{{ appointment.symptoms }}</td>
+                <td>{{ appointment.appointment_type }}</td>
+                <td><a href="{% url 'appointment_detail' appointment.id %}" class="btn">Show Details</a></td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        
+
+    {% else %}
+    <p>No appointments found.</p>
+    {% endif %}
+
+    
+</body>
+</html>
