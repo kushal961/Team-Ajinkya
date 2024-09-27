@@ -170,6 +170,39 @@
                 max-width: 100%;
             }
         }
+        .btn {
+    display: inline-block;
+    padding: 12px 20px; /* Adjust padding for size */
+    font-size: 16px; /* Font size */
+    color: #fff; /* Text color */
+    background-color: #007bff; /* Background color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    text-decoration: none; /* No underline */
+    transition: background-color 0.3s, transform 0.2s; /* Transition for smooth effects */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Hover effect */
+.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect */
+}
+
+/* Focus effect for accessibility */
+.btn:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Outline effect */
+}
+
+/* Active effect */
+.btn:active {
+    transform: translateY(0); /* Reset lift effect */
+    background-color: #004085; /* Even darker shade when active */
+}
+
+        
     </style>
 </head>
 <body>
@@ -180,148 +213,46 @@
         <!-- Example of Multiple Cards for Different Appointments -->
 
         <!-- Appointment Card 1 -->
+        {% for appointment in appointments %}
         <div class="appointment-card card-accent-blue">
-            <div class="status-banner-up">Upcoming</div>
+            {% if appointment.status == 'Completed' %}
+                <div class="status-banner-c">Completed</div>
+            {% else %}
+                <div class="status-banner-up">Upcoming</div>
+            {% endif %}
             <div class="card-header">
                 <div class="profile-image" style="background-image: url('{{ appointment.doctor.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Dr. John Doe</div>
+                {% if role == 'patient' %}
+                    <div class="doctor-patient-name">Dr. {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</div>
+                {% elif role == 'doctor' %}
+                    <div class="doctor-patient-name"> {{ appointment.doctor.user.first_name }} {{ appointment.doctor.user.last_name }}</div>
+                {% endif %}
+
             </div>
             <div class="appointment-info">
                 <div class="info-item">
                     <i class="fa fa-calendar"></i>
-                    <div class="info-text">25th Sept, 2024 - 3:00 PM</div>
+                    <div class="info-text">{{ appointment.appointment_date }}</div>
                 </div>
                 <div class="info-item">
                     <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Flu Symptoms</div>
+                    <div class="info-text">{{ appointment.symptoms }}</div>
                 </div>
                 <div class="info-item">
                     <i class="fa fa-video"></i>
-                    <div class="info-text">Online Consultation</div>
+                    <div class="info-text">{{ appointment.appointment_type }}</div>
                 </div>
             </div>
-            <a href="#" class="action-btn">View Details</a>
+                <a href="{% url 'appointment_detail' appointment.id %}">
+                    <button type="button" class="btn">Show Details</button>
+                </a>
+        
         </div>
-
-        <!-- Appointment Card 2 -->
-        <div class="appointment-card card-accent-green">
-            <div class="status-banner-c">Completed</div>
-            <div class="card-header">
-                <div class="profile-image" style="background-image: url('{{ appointment.patient.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Jane Smith</div>
-            </div>
-            <div class="appointment-info">
-                <div class="info-item">
-                    <i class="fa fa-calendar"></i>
-                    <div class="info-text">18th Sept, 2024 - 10:00 AM</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Back Pain</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-hospital"></i>
-                    <div class="info-text">In-person Consultation</div>
-                </div>
-            </div>
-            <a href="#" class="action-btn">View Details</a>
-        </div>
-
-        <!-- Appointment Card 3 -->
-        <div class="appointment-card card-accent-orange">
-            <div class="status-banner-up">Upcoming</div>
-            <div class="card-header">
-                <div class="profile-image" style="background-image: url('{{ appointment.patient.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Michael White</div>
-            </div>
-            <div class="appointment-info">
-                <div class="info-item">
-                    <i class="fa fa-calendar"></i>
-                    <div class="info-text">30th Sept, 2024 - 1:30 PM</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Migraine</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-phone"></i>
-                    <div class="info-text">Phone Consultation</div>
-                </div>
-            </div>
-            <a href="#" class="action-btn">View Details</a>
-        </div>
-
-        <!-- Appointment Card 4 -->
-        <div class="appointment-card card-accent-purple">
-            <div class="status-banner-c">Completed</div>
-            <div class="card-header">
-                <div class="profile-image" style="background-image: url('{{ appointment.doctor.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Dr. Emily Rose</div>
-            </div>
-            <div class="appointment-info">
-                <div class="info-item">
-                    <i class="fa fa-calendar"></i>
-                    <div class="info-text">12th Sept, 2024 - 2:00 PM</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Diabetes Check-up</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-hospital"></i>
-                    <div class="info-text">In-person Consultation</div>
-                </div>
-            </div>
-            <a href="#" class="action-btn">View Details</a>
-        </div>
-
-        <div class="appointment-card card-accent-orange">
-            <div class="status-banner-up">Upcoming</div>
-            <div class="card-header">
-                <div class="profile-image" style="background-image: url('{{ appointment.patient.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Michael White</div>
-            </div>
-            <div class="appointment-info">
-                <div class="info-item">
-                    <i class="fa fa-calendar"></i>
-                    <div class="info-text">30th Sept, 2024 - 1:30 PM</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Migraine</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-phone"></i>
-                    <div class="info-text">Phone Consultation</div>
-                </div>
-            </div>
-            <a href="#" class="action-btn">View Details</a>
-        </div>
-
-        <div class="appointment-card card-accent-orange">
-            <div class="status-banner-up">Upcoming</div>
-            <div class="card-header">
-                <div class="profile-image" style="background-image: url('{{ appointment.patient.profile_image_url }}');"></div>
-                <div class="doctor-patient-name">Michael White</div>
-            </div>
-            <div class="appointment-info">
-                <div class="info-item">
-                    <i class="fa fa-calendar"></i>
-                    <div class="info-text">30th Sept, 2024 - 1:30 PM</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-stethoscope"></i>
-                    <div class="info-text">Migraine</div>
-                </div>
-                <div class="info-item">
-                    <i class="fa fa-phone"></i>
-                    <div class="info-text">Phone Consultation</div>
-                </div>
-            </div>
-            <a href="#" class="action-btn">View Details</a>
-        </div>
+        {% endfor %}
 
     </div>
     {% else %}
     <p class="no-appointments">No appointments found.</p>
-    {%
+    {% endif %}
+    </body>
+</html>
